@@ -1,0 +1,29 @@
+trigger:
+  branches:
+    include:
+      - main  # Adjust to your branch name
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: 'latest'
+
+- script: |
+    terraform init
+  displayName: 'Initialize Terraform'
+
+- script: |
+    terraform plan -out=tfplan
+  displayName: 'Terraform Plan'
+
+- script: |
+    terraform apply -auto-approve tfplan
+  displayName: 'Terraform Apply'
+  env:
+    ARM_CLIENT_ID: $(clientId)  # Set these variables in Azure DevOps
+    ARM_CLIENT_SECRET: $(clientSecret)
+    ARM_SUBSCRIPTION_ID: $(subscriptionId)
+    ARM_TENANT_ID: $(tenantId)
