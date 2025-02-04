@@ -1,0 +1,31 @@
+1) Create an Entra ID User for External User
+- Navigate to Entra ID -> Users
+- Click on New guest user
+- Choose Invite user
+- Enter the external user’s email address 
+
+2) Grant Required Permissions 
+We need to check what type of Allowed services (Blob, File, Queue, Table) 
+- Navigate to Storage Account
+- In the Access control (IAM) section, click + Add and then Add role assignment
+- Choose the roles (in this example: Blob)
+Storage Blob Data Contributor (to allow reading, writing, and deleting blobs)
+Storage Blob Data Reader (to allow reading blobs)
+- Select the external user's Entra Id
+
+3) Configure Shared Access Signature (SAS) Tokens 
+- Navigate to Storage Account
+- Under Data storage, choose Containers
+- Select the blob container
+- Create a Blob Container (mytest) 
+- Select the access type (private)
+- After created the Blob container
+- Click on Shared access signature
+- Select the Allowed services (Blob)
+- Select the Allowed resource types (Object) TBD what type of resource they need it
+- Select Allowed permissions (Read, Write, List, Add, Create) TBD if they require delete option
+- Set the start and expiry date/time
+- Mention the Allowed IP address
+- Allowed protocols (Https only)
+- Select the signing key & Click on Generate SAS and connection string
+- Copy and send the SAS URL & SAS token, try to access it externally
